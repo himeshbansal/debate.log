@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Debate Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f4f6;--surf:#fff;--ink:#16222c;--mute:#5d6b77;--line:#d9dfe4;--acc:#0d6a6a;--acc-ink:#fff;--ok:#237a4b;--mid:#a87414;--bad:#b3432d;--ok-bg:#e1f2e8;--mid-bg:#f8edd2;--bad-bg:#f8e2dc;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10181e;--surf:#18232b;--ink:#e6edf2;--mute:#93a3b0;--line:#2b3a45;--acc:#4fb8b0;--acc-ink:#07201f;--ok:#6cc790;--mid:#e0b04a;--bad:#ee8d78;--ok-bg:#16301f;--mid-bg:#33290f;--bad-bg:#37201a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10181e;--surf:#18232b;--ink:#e6edf2;--mute:#93a3b0;--line:#2b3a45;--acc:#4fb8b0;--acc-ink:#07201f;--ok:#6cc790;--mid:#e0b04a;--bad:#ee8d78;--ok-bg:#16301f;--mid-bg:#33290f;--bad-bg:#37201a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 'Instrument Sans',system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+h1{font:600 28px/1.1 Fraunces,Georgia,serif;margin:0}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;font:inherit;font-weight:600;color:var(--mute);cursor:pointer}
+nav button.on{color:var(--ink);border-color:var(--acc)}
+button,input,select,textarea{font:inherit;color:var(--ink)}
+.btn{background:var(--acc);color:var(--acc-ink);border:0;border-radius:6px;padding:9px 16px;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:5px 10px;font-size:13px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.bar select,.bar input{background:var(--surf);border:1px solid var(--line);border-radius:6px;padding:7px 10px}
+.bar input{flex:1;min-width:140px}
+details.e{background:var(--surf);border:1px solid var(--line);border-radius:8px;margin-bottom:8px}
+details.e summary{list-style:none;cursor:pointer;padding:12px 14px;display:grid;gap:3px}
+details.e summary::-webkit-details-marker{display:none}
+.t1{display:flex;justify-content:space-between;gap:10px;font-weight:600}
+.t2{color:var(--mute);font-size:13px}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:1px 9px;font-size:12px;margin:2px 4px 2px 0;color:var(--mute)}
+.tag.ok{background:var(--ok-bg);color:var(--ok);border-color:transparent}
+.tag.mid{background:var(--mid-bg);color:var(--mid);border-color:transparent}
+.tag.bad{background:var(--bad-bg);color:var(--bad);border-color:transparent}
+.body{padding:0 14px 14px;border-top:1px solid var(--line)}
+.body h4{margin:12px 0 2px;font-size:13px;color:var(--mute);font-weight:600}
+.body p{margin:0;white-space:pre-wrap}
+.acts{display:flex;gap:8px;margin-top:14px}
+.empty{text-align:center;color:var(--mute);padding:40px 10px;border:1px dashed var(--line);border-radius:8px}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--surf);color:var(--ink);width:min(640px,calc(100% - 20px));max-height:92vh;padding:0}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+form{padding:18px;display:grid;gap:12px}
+form h2{margin:0;font:600 22px Fraunces,Georgia,serif}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.g2{grid-template-columns:1fr}}
+label{display:grid;gap:3px;font-size:13px;font-weight:600;color:var(--mute)}
+label input,label select,label textarea{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;font-weight:400}
+textarea{min-height:70px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips label{display:inline-flex;grid-template:none;align-items:center;gap:5px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-weight:400;color:var(--ink);cursor:pointer}
+.chips input{accent-color:var(--acc)}
+.obj{border-left:4px solid var(--acc);padding:2px 0 2px 12px;background:var(--bg);border-radius:0 6px 6px 0;padding:10px 12px}
+.fa{display:flex;justify-content:flex-end;gap:8px}
+.stats{display:grid;gap:16px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:14px}
+.card h3{margin:0 0 10px;font:600 17px Fraunces,Georgia,serif}
+.row{display:grid;grid-template-columns:130px 1fr 70px;gap:8px;align-items:center;font-size:13px;margin:5px 0}
+.track{background:var(--bg);height:10px;border-radius:5px;overflow:hidden}
+.fill{height:100%;background:var(--acc)}
+.big{display:flex;gap:24px;flex-wrap:wrap}
+.big b{display:block;font:600 28px Fraunces,Georgia,serif}
+.big span{color:var(--mute);font-size:13px}
+.foot{margin-top:28px;color:var(--mute);font-size:13px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>Debate Log</h1><button class="btn" id="add">Add entry</button></header>
+<nav id="nav"></nav>
+<div id="main"></div>
+<div class="foot">
+<span id="sync">Saved only in this browser.</span><span>Back up often:</span>
+<button class="btn ghost sm" id="exj">Download backup</button>
+<button class="btn ghost sm" id="exc">Download CSV</button>
+<button class="btn ghost sm" id="imp">Restore backup</button>
+<button class="btn ghost sm" id="cfg">Sync settings</button>
+<input type="file" id="file" accept=".json" hidden>
+</div>
+</div>
+<dialog id="dlg"></dialog>
+<script>
+const FMT={AP:{name:'Asian Parliamentary',pos:['Prop 1st','Prop 2nd','Prop 3rd','Prop Reply','Opp 1st','Opp 2nd','Opp 3rd','Opp Reply'],res:['Win','Loss']},
+BP:{name:'British Parliamentary',pos:['PM (OG)','DPM (OG)','LO (OO)','DLO (OO)','MG (CG)','GW (CG)','MO (CO)','OW (CO)'],res:['1st','2nd','3rd','4th']}};
+const MT=['Economic','Political','Social','International relations','Ethics / values','Law & justice','Environment','Religion / culture','Gender / identity','Education','Health','Tech / media','Sports / arts','Other'];
+const CAUSES=['Structure','Weak analysis','No weighing','Rebuttal / clash','Missed POIs','Time management','Delivery / style','Extension (BP)','Framing / definition','Burden not met','Clashed with teammate','Motion knowledge','Nerves','Prep time'];
+const MET=['Not rated yet','Yes','Partly','No'];
+let D=[],view='comp',flt={fmt:'',mt:'',q:''};
+try{D=JSON.parse(localStorage.getItem('debatelog')||'[]')}catch(e){D=[]}
+const save=()=>{try{localStorage.setItem('debatelog',JSON.stringify(D))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+const f1=n=>n==null?'–':(Math.round(n*10)/10).toString();
+
+function nav(){$('#nav').innerHTML=[['comp','Tournaments'],['mock','Mocks & sparring'],['stats','Patterns']].map(([k,l])=>`<button class="${view===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
+function resTag(r){if(!r)return'';const good=['Win','1st','2nd'].includes(r);return `<span class="tag ${good?'ok':'bad'}">${esc(r)}</span>`}
+function metTag(e){if(e.kind!=='mock'||!e.objective)return'';const m=e.met||'Not rated yet';const c={Yes:'ok',Partly:'mid',No:'bad'}[m]||'';return `<span class="tag ${c}">Objective: ${m}</span>`}
+function entry(e){
+ const t=e.kind==='mock'?(e.event||'Mock'):(e.event||'Tournament')+(e.round?' · '+e.round:'');
+ return `<details class="e"><summary><div class="t1"><span>${esc(t)}</span><span>${e.score!==''&&e.score!=null?esc(e.score):''}</span></div>
+ <div class="t2">${esc(e.date||'')} · ${e.format} · ${esc(e.pos||'')}${e.mtype?' · '+esc(e.mtype):''}</div>
+ <div>${esc(e.motion||'')}</div><div>${resTag(e.result)}${metTag(e)}</div></summary>
+ <div class="body">
+ ${e.objective?`<h4>Objective</h4><p>${esc(e.objective)}</p>`:''}
+ ${e.reflection?`<h4>Did I meet it? Reflection</h4><p>${esc(e.reflection)}</p>`:''}
+ ${e.mates?`<h4>Teammate(s)</h4><p>${esc(e.mates)}</p>`:''}
+ ${e.feedback?`<h4>Judge feedback</h4><p>${esc(e.feedback)}</p>`:''}
+ ${(e.causes||[]).length?`<h4>Possible causes of mistakes</h4><p>${e.causes.map(c=>`<span class="tag">${esc(c)}</span>`).join('')}</p>`:''}
+ ${e.causeNote?`<h4>Cause notes</h4><p>${esc(e.causeNote)}</p>`:''}
+ ${e.notes?`<h4>My speech</h4><p>${esc(e.notes)}</p>`:''}
+ <div class="acts"><button class="btn sm" data-edit="${e.id}">Edit</button><button class="btn ghost sm" data-del="${e.id}">Delete</button></div></div></details>`}
+
+function list(){
+ const rows=D.filter(e=>e.kind===view&&(!flt.fmt||e.format===flt.fmt)&&(!flt.mt||e.mtype===flt.mt)&&(!flt.q||JSON.stringify(e).toLowerCase().includes(flt.q.toLowerCase()))).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+ return `<div class="bar"><input id="q" placeholder="Search motions, feedback, teammates" value="${esc(flt.q)}">
+ <select id="ff"><option value="">All formats</option><option value="AP"${flt.fmt==='AP'?' selected':''}>AP</option><option value="BP"${flt.fmt==='BP'?' selected':''}>BP</option></select>
+ <select id="fm"><option value="">All motion types</option>${MT.map(m=>`<option${flt.mt===m?' selected':''}>${m}</option>`).join('')}</select></div>`+
+ (rows.length?rows.map(entry).join(''):`<div class="empty">${view==='mock'?'No mocks yet. Add one and write your objective before you debate.':'No tournament rounds yet. Add your first round.'}</div>`)}
+
+function bars(map,unit){
+ const ks=Object.keys(map).filter(k=>map[k].length);if(!ks.length)return'<div class="t2">Not enough data yet.</div>';
+ const mx=Math.max(...ks.map(k=>avg(map[k])));
+ return ks.sort((a,b)=>avg(map[b])-avg(map[a])).map(k=>`<div class="row"><span>${esc(k)}</span><div class="track"><div class="fill" style="width:${avg(map[k])/mx*100}%"></div></div><span>${f1(avg(map[k]))} <small>(${map[k].length})</small></span></div>`).join('')}
+function group(arr,key){const m={};arr.forEach(e=>{if(e.score===''||e.score==null)return;const k=typeof key==='function'?key(e):e[key];if(!k)return;(m[k]=m[k]||[]).push(+e.score)});return m}
+function stats(){
+ const sc=D.filter(e=>e.score!==''&&e.score!=null).map(e=>+e.score);
+ const objs=D.filter(e=>e.kind==='mock'&&e.objective&&e.met&&e.met!=='Not rated yet');
+ const hit=objs.filter(e=>e.met==='Yes').length;
+ const cc={};D.forEach(e=>(e.causes||[]).forEach(c=>cc[c]=(cc[c]||0)+1));
+ const ck=Object.keys(cc).sort((a,b)=>cc[b]-cc[a]);
+ return `<div class="stats"><div class="card big"><div><b>${D.length}</b><span>entries</span></div><div><b>${f1(avg(sc))}</b><span>average speaker score</span></div>
+ <div><b>${objs.length?Math.round(hit/objs.length*100)+'%':'–'}</b><span>mock objectives met (${hit}/${objs.length})</span></div></div>
+ <div class="card"><h3>Average score by format</h3>${bars(group(D,e=>FMT[e.format].name))}</div>
+ <div class="card"><h3>Average score by position</h3>${bars(group(D,e=>e.format+' · '+e.pos))}</div>
+ <div class="card"><h3>Average score by motion type</h3>${bars(group(D,'mtype'))}</div>
+ <div class="card"><h3>Average score by teammate</h3>${bars(group(D.flatMap(e=>(e.mates||'').split(/[,&]/).map(m=>m.trim()).filter(Boolean).map(m=>({...e,m}))),'m'))}</div>
+ <div class="card"><h3>Most common causes of mistakes</h3>${ck.length?ck.map(k=>`<div class="row"><span>${esc(k)}</span><div class="track"><div class="fill" style="width:${cc[k]/cc[ck[0]]*100}%"></div></div><span>${cc[k]}</span></div>`).join(''):'<div class="t2">Tag causes when you log rounds.</div>'}</div></div>`}
+
+function render(){nav();$('#main').innerHTML=view==='stats'?stats():list();$('#add').style.display=view==='stats'?'none':''}
+
+function form(e){
+ const mock=(e?e.kind:view)==='mock',f=e?e.format:'BP';
+ e=e||{kind:view,format:f,date:new Date().toISOString().slice(0,10),causes:[]};
+ const opts=(a,v,blank)=>(blank?'<option value="">–</option>':'')+a.map(x=>`<option${x===v?' selected':''}>${esc(x)}</option>`).join('');
+ return `<form method="dialog" id="fm2"><h2>${e.id?'Edit':'New'} ${mock?'mock':'tournament round'}</h2>
+ ${mock?`<div class="obj"><label>Objective for this mock (write before you debate)<textarea name="objective" placeholder="e.g. Weigh every clash in the second half of my speech">${esc(e.objective)}</textarea></label></div>`:''}
+ <div class="g2"><label>Date<input type="date" name="date" value="${esc(e.date)}"></label>
+ <label>Format<select name="format" id="fsel"><option value="AP"${f==='AP'?' selected':''}>Asian Parliamentary</option><option value="BP"${f==='BP'?' selected':''}>British Parliamentary</option></select></label>
+ <label>${mock?'Mock name / opponents':'Tournament'}<input name="event" value="${esc(e.event)}"></label>
+ ${mock?'':`<label>Round<input name="round" value="${esc(e.round)}" placeholder="R3, Quarterfinal"></label>`}
+ <label>My position<select name="pos" id="psel">${opts(FMT[f].pos,e.pos)}</select></label>
+ <label>Result<select name="result" id="rsel">${opts(FMT[f].res,e.result,1)}</select></label>
+ <label>My speaker score<input type="number" step="0.5" name="score" value="${esc(e.score)}"></label>
+ <label>Teammate(s)<input name="mates" value="${esc(e.mates)}"></label>
+ <label>Motion type<select name="mtype">${opts(MT,e.mtype,1)}</select></label></div>
+ <label>Motion<textarea name="motion" style="min-height:48px">${esc(e.motion)}</textarea></label>
+ <label>Judge feedback<textarea name="feedback">${esc(e.feedback)}</textarea></label>
+ <div><div style="font-size:13px;font-weight:600;color:var(--mute);margin-bottom:5px">Possible causes of mistakes</div><div class="chips">${CAUSES.map(c=>`<label><input type="checkbox" name="causes" value="${esc(c)}"${(e.causes||[]).includes(c)?' checked':''}>${esc(c)}</label>`).join('')}</div></div>
+ <label>Other cause notes<textarea name="causeNote" style="min-height:48px">${esc(e.causeNote)}</textarea></label>
+ ${mock?`<div class="g2"><label>Objective met?<select name="met">${opts(MET,e.met||MET[0])}</select></label></div><label>Reflection on the objective<textarea name="reflection">${esc(e.reflection)}</textarea></label>`:''}
+ <label>My speech (text or notes)<textarea name="notes" style="min-height:120px">${esc(e.notes)}</textarea></label>
+ <div class="fa"><button type="button" class="btn ghost" id="cx">Cancel</button><button class="btn" value="ok">Save</button></div></form>`}
+
+function open(e){
+ const d=$('#dlg');d.innerHTML=form(e);d.showModal();
+ $('#cx').onclick=()=>d.close();
+ $('#fsel').onchange=ev=>{const F=FMT[ev.target.value];$('#psel').innerHTML=F.pos.map(x=>`<option>${x}</option>`).join('');$('#rsel').innerHTML='<option value="">–</option>'+F.res.map(x=>`<option>${x}</option>`).join('')};
+ $('#fm2').onsubmit=ev=>{
+  const fd=new FormData(ev.target),o=Object.fromEntries(fd);o.causes=fd.getAll('causes');
+  o.kind=e?e.kind:view;o.id=e&&e.id?e.id:Date.now().toString(36);
+  const i=D.findIndex(x=>x.id===o.id);if(i>=0)D[i]=o;else D.push(o);save();put(o);render()};
+}
+
+document.addEventListener('click',ev=>{
+ const t=ev.target;
+ if(t.dataset.v){view=t.dataset.v;render()}
+ if(t.dataset.edit)open(D.find(x=>x.id===t.dataset.edit));
+ if(t.dataset.del&&confirm('Delete this entry?')){D=D.filter(x=>x.id!==t.dataset.del);save();rm(t.dataset.del);render()}
+});
+document.addEventListener('input',ev=>{if(ev.target.id==='q'){flt.q=ev.target.value;const p=ev.target.selectionStart;render();const q=$('#q');q.focus();q.setSelectionRange(p,p)}});
+document.addEventListener('change',ev=>{if(ev.target.id==='ff'){flt.fmt=ev.target.value;render()}if(ev.target.id==='fm'){flt.mt=ev.target.value;render()}});
+$('#add').onclick=()=>open();
+const dl=(name,txt,type)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click()};
+$('#exj').onclick=()=>dl('debate-log-backup.json',JSON.stringify(D,null,1),'application/json');
+$('#exc').onclick=()=>{const k=['kind','date','format','event','round','pos','result','score','mates','mtype','motion','feedback','causes','objective','met','reflection','notes'];
+ const q=v=>'"'+String(Array.isArray(v)?v.join('; '):v??'').replace(/"/g,'""')+'"';
+ dl('debate-log.csv',[k.join(',')].concat(D.map(e=>k.map(c=>q(e[c])).join(','))).join('\n'),'text/csv')};
+$('#imp').onclick=()=>$('#file').click();
+$('#file').onchange=ev=>{const r=new FileReader();r.onload=()=>{try{const a=JSON.parse(r.result);if(Array.isArray(a)&&confirm('Replace current entries with this backup?')){const keep=new Set(a.map(x=>x.id));D.forEach(x=>{if(!keep.has(x.id))rm(x.id)});D=a;save();D.forEach(put);render()}}catch(e){alert('That file is not a valid backup.')}};if(ev.target.files[0])r.readAsText(ev.target.files[0])};
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}};
+const CFG={url:'',key:''}; // optional: paste your web app URL and key here to skip per-device setup
+const cfg=()=>({url:LS('dl_url')||CFG.url,key:LS('dl_key')||CFG.key});
+let Q=[];try{Q=JSON.parse(LS('dl_q')||'[]')}catch(e){}
+const saveQ=()=>LS('dl_q',JSON.stringify(Q));
+const setSync=t=>{$('#sync').textContent=t};
+let busy=false;
+async function call(body){const c=cfg();const r=await fetch(c.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({key:c.key,...body})});const j=await r.json();if(j.error)throw new Error(j.error);return j}
+async function sync(){
+ const c=cfg();if(!c.url||!c.key){setSync('Saved only in this browser. Set up sync below.');return}
+ if(busy)return;busy=true;setSync('Syncing…');
+ try{
+  while(Q.length){const op=Q[0];await call(op.a==='put'?{action:'put',entry:op.o}:{action:'delete',id:op.id});Q.shift();saveQ()}
+  const r=await fetch(c.url+'?action=list&key='+encodeURIComponent(c.key));const j=await r.json();if(j.error)throw new Error(j.error);
+  if(!Q.length){D=j.entries;save();if(!$('#dlg').open)render()}
+  setSync('Synced at '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}));
+ }catch(e){setSync('Sync failed ('+e.message+'). Saved on this device and will retry.')}
+ busy=false;if(Q.length&&!document.hidden)setTimeout(sync,1500)}
+const put=o=>{Q.push({a:'put',o});saveQ();sync()};
+const rm=id=>{Q.push({a:'del',id});saveQ();sync()};
+$('#cfg').onclick=()=>{const c=cfg(),d=$('#dlg');
+ d.innerHTML=`<form method="dialog" id="cf"><h2>Sync settings</h2><label>Web app URL<input name="url" value="${esc(c.url)}" placeholder="https://script.google.com/macros/s/.../exec"></label><label>Secret key<input name="key" value="${esc(c.key)}"></label><div class="t2">Enter the same URL and key on each device.</div><div class="fa"><button type="button" class="btn ghost" id="cx">Cancel</button><button class="btn">Save and sync</button></div></form>`;
+ d.showModal();$('#cx').onclick=()=>d.close();
+ $('#cf').onsubmit=ev=>{const f=Object.fromEntries(new FormData(ev.target));LS('dl_url',f.url.trim());LS('dl_key',f.key.trim());D.forEach(o=>Q.push({a:'put',o}));saveQ();sync()}};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
+setInterval(()=>{if(!document.hidden&&!$('#dlg').open)sync()},60000);
+render();sync();
+</script>
+</body>
+</html>
